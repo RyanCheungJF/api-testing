@@ -27,7 +27,6 @@ var users = [
 
 // gets all users
 app.get('/users', (req, res) => {
-  console.log(users)
   res.status(200).send(users)
 })
 
@@ -36,11 +35,9 @@ app.get('/user/:id', (req, res) => {
   const id = req.params.id
   const user = users.find((u) => u.id === parseInt(id))
   if (!user) {
-    console.log('User does not exist')
     res.status(404).send({ message: 'User does not exist' })
     return
   }
-  console.log(user)
   res.status(200).send(user)
 })
 
@@ -49,12 +46,10 @@ app.post('/user/:id', (req, res) => {
   const id = req.params.id
   const user = users.find((u) => u.id === parseInt(id))
   if (user) {
-    console.log('User exists')
     res.status(404).send({ message: 'User exists' })
     return
   }
   if (!req.body.name || !req.body.age) {
-    console.log('Missing fields!')
     res.status(404).send({ message: 'Missing fields!' })
     return
   }
@@ -64,7 +59,6 @@ app.post('/user/:id', (req, res) => {
     age: req.body.age,
   }
   users.push(newUser)
-  console.log(newUser)
   res.status(201).send(newUser)
 })
 
@@ -73,7 +67,6 @@ app.put('/user/:id', (req, res) => {
   const id = req.params.id
   const user = users.find((u) => u.id === parseInt(id))
   if (!user) {
-    console.log('User does not exist')
     res.status(404).send({ message: 'User does not exist' })
     return
   }
@@ -91,7 +84,6 @@ app.put('/user/:id', (req, res) => {
   }
   const index = users.indexOf(user)
   users[index] = newUser
-  console.log(newUser)
   res.status(200).send(newUser)
 })
 
@@ -100,14 +92,12 @@ app.delete('/user/:id', (req, res) => {
   const id = req.params.id
   const user = users.find((u) => u.id === parseInt(id))
   if (!user) {
-    console.log('User does not exist, did not delete')
     res.status(404).send({ message: 'User does not exist, did not delete' })
     return
   }
   const index = users.indexOf(user)
   users.splice(index, 1)
-  console.log(user)
-  res.status(204)
+  res.status(204).send()
 })
 
 module.exports = app

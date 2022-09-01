@@ -21,4 +21,36 @@ const initialData = [
   },
 ]
 
-module.exports = { initialData }
+const newUser = {
+  name: 'Vance Pays',
+  age: 24,
+}
+
+const createdUser = {
+  id: 5,
+  name: 'Vance Pays',
+  age: 24,
+}
+
+const invalidUser = {
+  name: 'Vance Pays',
+}
+
+const editUser = {
+  name: 'Vance Days',
+}
+
+const editedUser = {
+  id: 5,
+  name: 'Vance Days',
+  age: 24,
+}
+
+module.exports = {
+  initialData,
+  newUser,
+  createdUser,
+  invalidUser,
+  editUser,
+  editedUser,
+}
