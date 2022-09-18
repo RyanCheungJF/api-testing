@@ -2,11 +2,26 @@ const express = require('express')
 const axios = require('axios')
 const app = express()
 const checkIfAuthenticated = require('../middleware/middleware')
-const { signInWithEmailAndPassword, getAuth } = require('@firebase/auth')
+const {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  getAuth,
+} = require('@firebase/auth')
 const auth = require('../firebase')
 
 app.get('/home', checkIfAuthenticated, async (req, res) => {
   return res.status(200).send({ message: 'Welcome authenticated user!' })
+})
+
+app.post('/signup', (req, res) => {
+  const { email, password } = req.body
+  createUserWithEmailAndPassword(getAuth(), email, password)
+    .then((userCredential) => {
+      res.status(200).send({ message: 'Successful Signup!' })
+    })
+    .catch((err) => {
+      res.status(400).send({ message: 'Failed to signup' })
+    })
 })
 
 app.post('/login', (req, res) => {
