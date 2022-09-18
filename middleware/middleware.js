@@ -22,9 +22,27 @@ const checkIfAuthenticated = (req, res, next) => {
     } catch (e) {
       return res
         .status(401)
-        .send({ error: 'You are not authorized to make this request' })
+        .send({ error: 'You are not authenticated to make this request!' })
     }
   })
 }
 
-module.exports = checkIfAuthenticated
+const checkIfAdmin = (req, res, next) => {
+  getAuthToken(req, res, async () => {
+    try {
+      const { authToken } = req
+      const userInfo = await admin.auth().verifyIdToken(authToken)
+      if (!userInfo.admin) {
+        throw new Error('Unauthorized!')
+      }
+      req.authId = userInfo.uid
+      return next()
+    } catch (e) {
+      return res
+        .status(403)
+        .send({ error: 'You are not authorized to make this request!' })
+    }
+  })
+}
+
+module.exports = { checkIfAuthenticated, checkIfAdmin }
