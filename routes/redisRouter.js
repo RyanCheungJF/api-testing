@@ -23,17 +23,6 @@ app.get('/fishes', cacheData, async (_, res) => {
     console.log(err)
     return res.status(400).send({ message: 'Failed to save in redis!' })
   }
-  /*
-  return axios
-    .get('https://www.fishwatch.gov/api/species')
-    .then((response) => {
-      res.status(200).send(response.data)
-    })
-    .catch((err) => {
-      console.log(err)
-      res.status(400).send({ message: 'Failed to fetch fish data' })
-    })
-    */
 })
 
 module.exports = app

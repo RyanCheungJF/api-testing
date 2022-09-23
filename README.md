@@ -16,6 +16,9 @@ Once done, run the node server using `npm start`.
 
 It is automatically configured to run on PORT 8080.
 
+Alternatively, the API is hosted on Google Cloud, 
+and can be accessed using this [link](https://data-cycle-361207.et.r.appspot.com/).
+
 ## Testing
 
 For testing our API, we use the dependencies `mocha`, `chai` and `chai-http`.
@@ -24,7 +27,7 @@ To run the unit tests, run `npm test`.
 
 ## API details
 
-For Authorization and Authentication:
+<b>For Authorization and Authentication:</b>
 
 Our API supports two types of users, viewers, logged in viewers and admins. 
 
@@ -43,7 +46,7 @@ We provide authentication and authroization checks in `middleware`.
 
 <br>
 
-For Redis caching:
+<b>For Redis caching:</b>
 
 We are reading data from this [API](https://www.fishwatch.gov/api/species),
 which contains a huge chunk of data about many different types of fishes.

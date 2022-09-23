@@ -13,6 +13,10 @@ app.use('', userRouter)
 app.use('', adminRouter)
 app.use('', redisRouter)
 
+app.get('', (_, res) => {
+  return res.status(200).send({ message: 'Welcome!' })
+})
+
 module.exports = app.listen(PORT, () =>
   console.log(`Running API on PORT ${PORT}`)
 )
