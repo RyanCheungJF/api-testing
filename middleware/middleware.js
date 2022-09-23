@@ -56,7 +56,7 @@ const checkIfAdmin = (req, res, next) => {
 
 const cacheData = async (_, res, next) => {
   try {
-    const cacheResults = await redisClient.get('fish')
+    const cacheResults = await redisClient.get('persons')
     if (cacheResults) {
       return res.status(200).send({
         fromCache: true,
