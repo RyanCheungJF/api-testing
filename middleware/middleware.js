@@ -42,11 +42,13 @@ const checkIfAdmin = (req, res, next) => {
       const { authToken } = req
       const userInfo = await admin.auth().verifyIdToken(authToken)
       if (!userInfo.admin) {
+        console.log('throwing')
         throw new Error('Unauthorized!')
       }
       req.authId = userInfo.uid
       return next()
     } catch (e) {
+      console.log('catching')
       return res
         .status(403)
         .send({ error: 'You are not authorized to make this request!' })

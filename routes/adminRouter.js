@@ -76,8 +76,7 @@ app.get('/client', async (_, res) => {
       res.status(response.status).send(response.data)
     })
     .catch((err) => {
-      console.log(err)
-      res.status(400).send({ message: 'Failed to achieve request!' })
+      res.status(err.response.status).send({ message: err.response.data.error })
     })
 })
 
@@ -86,8 +85,8 @@ app.get('/client/admin', async (_, res) => {
   const user = getAuth().currentUser
   if (!user) {
     res
-      .status(403)
-      .send({ message: 'You are not authorized to make this request!' })
+      .status(401)
+      .send({ message: 'You are not authenticated to make this request!' })
     return
   }
   const token = await user.getIdToken()
@@ -100,8 +99,7 @@ app.get('/client/admin', async (_, res) => {
       res.status(response.status).send(response.data)
     })
     .catch((err) => {
-      console.log(err)
-      res.status(400).send({ message: 'Failed to achieve request!' })
+      res.status(err.response.status).send({ message: err.response.data.error })
     })
 })
 
