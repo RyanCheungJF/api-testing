@@ -1,4 +1,13 @@
 const admin = require('../firebase-config')
+//redis
+const redis = require('redis')
+let redisClient
+;(async () => {
+  redisClient = redis.createClient()
+  redisClient.on('error', (error) => console.error(`Error : ${error}`))
+  redisClient.on('connect', () => console.log('Hello Redis!'))
+  await redisClient.connect()
+})()
 
 const getAuthToken = (req, res, next) => {
   if (
@@ -45,4 +54,21 @@ const checkIfAdmin = (req, res, next) => {
   })
 }
 
-module.exports = { checkIfAuthenticated, checkIfAdmin }
+const cacheData = async (_, res, next) => {
+  try {
+    const cacheResults = await redisClient.get('fish')
+    if (cacheResults) {
+      return res.status(200).send({
+        fromCache: true,
+        data: JSON.parse(cacheResults),
+      })
+    } else {
+      return next()
+    }
+  } catch (err) {
+    console.log(err)
+    return res.status(400).send({ message: 'Issue reading from Redis!' })
+  }
+}
+
+module.exports = { checkIfAuthenticated, checkIfAdmin, cacheData, redisClient }
